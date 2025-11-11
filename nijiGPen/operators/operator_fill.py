@@ -42,7 +42,7 @@ class SmartFillOperator(bpy.types.Operator):
         description='',
         default='',
         search=multilayer_search_func
-    )
+    ) # type: ignore
     hint_layer: bpy.props.StringProperty(
         name='Hint Layer',
         description='',

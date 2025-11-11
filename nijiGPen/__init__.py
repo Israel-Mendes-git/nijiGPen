@@ -26,47 +26,12 @@ bl_info = {
 }
 
 from . import auto_load
-from .ui_viewport_tools import *
 from .api_router import register_alternative_api_paths, unregister_alternative_api_paths
 
 auto_load.init()
 
 def register():
     auto_load.register()
-    bpy.types.Scene.nijigp_working_plane = bpy.props.EnumProperty(
-                        name='Working Plane',
-                        items=[('X-Z', 'Front (X-Z)', ''),
-                                ('Y-Z', 'Side (Y-Z)', ''),
-                                ('X-Y', 'Top (X-Y)', ''),
-                                ('VIEW', 'View', 'Use the current view as the 2D working plane'),
-                                ('AUTO', 'Auto', 'Calculate the 2D plane automatically based on input points and view angle')],
-                        default='AUTO',
-                        description='The 2D (local) plane that most add-on operators are working on'
-                        )
-    bpy.types.Scene.nijigp_working_plane_layer_transform = bpy.props.BoolProperty(
-                        default=True, 
-                        description="Taking the active layer's transform into consideration when calculating the view angle"
-                        )
-    bpy.types.Scene.nijigp_draw_bool_material_constraint = bpy.props.EnumProperty(
-                        name='Material Filter',
-                        items=[('ALL', 'All Materials', ''),
-                               ('SAME', 'Same Material', ''),
-                               ('DIFF', 'Different Material', '')],
-                        default='ALL',
-                        description="Boolean operations in Draw mode only apply to strokes with materials satisfying this requirement"
-                        )
-    bpy.types.Scene.nijigp_draw_bool_fill_constraint = bpy.props.EnumProperty(
-                        name='Stroke Filter',
-                        items=[('ALL', 'Stroke & Fill', ''),
-                               ('FILL', 'Fill Only', '')],
-                        default='FILL',
-                        description="Boolean operations in Draw mode apply to either all strokes or only strokes with fills"
-                        )
-    bpy.types.Scene.nijigp_draw_bool_selection_constraint = bpy.props.BoolProperty(
-                        default=False, 
-                        description="Boolean operations in Draw mode apply to selected strokes only"
-                        )
-    register_viewport_tools()
     register_alternative_api_paths()
     
     custom_lib_path = bpy.context.preferences.addons[__package__].preferences.custom_lib_path
@@ -76,5 +41,4 @@ def register():
 
 def unregister():
     auto_load.unregister()
-    unregister_viewport_tools()
     unregister_alternative_api_paths()
